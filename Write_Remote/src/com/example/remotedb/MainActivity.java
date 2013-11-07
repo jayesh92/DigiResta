@@ -1,20 +1,6 @@
 package com.example.remotedb;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-
 import android.app.Activity;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -29,7 +15,7 @@ public class MainActivity extends Activity {
 		Log.d("Before","accessWebService");
 		accessWebService();
 		Log.d("After","accessWebService");
-	}
+		}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -38,55 +24,14 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
-	// Async Task to access the web
-	private class JsonReadTask extends AsyncTask<String, Void, String> {
-		@Override
-		protected String doInBackground(String... params) {
-			Log.d("Before","doInBackground");
-			HttpClient httpclient = new DefaultHttpClient();
-			Log.d("params",params[0]);						
-			HttpPost httppost = new HttpPost(params[0]);
-			try 
-			{
-				//The Variables Below are Added in form Of Name Value Pairs.(Post Data)
-				ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-	            nameValuePairs.add(new BasicNameValuePair("table_no", params[1]));
-	            nameValuePairs.add(new BasicNameValuePair("bill_cost", params[2]));
-	            nameValuePairs.add(new BasicNameValuePair("cust_name", params[3]));
-	            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-	            //Final Request
-				HttpResponse response = httpclient.execute(httppost);
-				//The Line Below is BOGUS because it caused app to shut down.
-			    jsonResult = inputStreamToString(response.getEntity().getContent()).toString();
-				Log.d("jsonResult",jsonResult);
-			}
-			catch (ClientProtocolException e) 
-			{
-				Log.d("catch","1");
-				e.printStackTrace();
-			}
-			catch (IOException e)
-			{
-				Log.d("catch","2");
-				e.printStackTrace();
-			}
-			Log.d("After","doInBackground");
-			return null;
-		}
-        //The StringBuilder Class is Bogus. It cause App to crash if removed.
-		private StringBuilder inputStreamToString(InputStream is) {
-			StringBuilder answer = new StringBuilder();
-			return answer;
-		}
-
-	}// end async task
-
 	public void accessWebService() {
-		JsonReadTask task = new JsonReadTask();
+		WriteClass task = new WriteClass();
 		// passes values for the urls string array
 		Log.d("Before","task.execute");
 		//The Sequence Being The URL, The Table Number, Bill and Customer Name in String Format.
-		task.execute(new String[] { url,"121","1200","Tumhara Baap" });
+		task.execute(new String[] { url,"110","1100","Jaeysh" });
+		
+		//You can Access the Public Varialbes of The task Class by accesing it using task.variablename
 		Log.d("After","task.execute");
 	}
 
