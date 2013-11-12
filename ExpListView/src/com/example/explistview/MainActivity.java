@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,19 +26,35 @@ public class MainActivity extends Activity {
   // more efficient than HashMap for mapping integers to objects
   SparseArray<Group> groups = new SparseArray<Group>();
   Context ctx;
+  MyExpandableListAdapter adapter;
   HashMap<String,ArrayList<String>> menu = new HashMap<String,ArrayList<String>>();  
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+    /*setContentView(R.layout.activity_main);*/
+    adapter = new MyExpandableListAdapter(this, groups);
     menu.put("Soups", new ArrayList<String>(){{ add("Manchow");add("Tomato");}});
     menu.put("Starter", new ArrayList<String>(){{ add("Tandoori");add("Grilled");}});
     menu.put("Curry", new ArrayList<String>(){{ add("PBM");add("BCM");}});
+    Log.d("before", "createdata");
     createData();
+    Log.d("after", "createdata");
     ctx=this;
-    ExpandableListView listView = (ExpandableListView) findViewById(R.id.listView);
-    final MyExpandableListAdapter adapter = new MyExpandableListAdapter(this,
-        groups);
+    ActionBar actionbar = getActionBar();
+    actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+    Tab tab1 = actionbar.newTab();
+    tab1.setText("MENU");
+    TabListener<Tab1Fragment> tl = new TabListener<Tab1Fragment>(this, "MENU", Tab1Fragment.class);
+    tab1.setTabListener(tl);
+    actionbar.addTab(tab1);
+    Tab tab2 = actionbar.newTab();
+    tab2.setText("MY ORDER");
+    TabListener<Tab2Fragment> tl2 = new TabListener<Tab2Fragment>(this, "MY ORDER", Tab2Fragment.class);
+    tab2.setTabListener(tl2);
+    actionbar.addTab(tab2);
+    Log.d("after", "actionstuff");
+    /*ExpandableListView listView = (ExpandableListView) findViewById(R.id.listView);
+    final MyExpandableListAdapter adapter = new MyExpandableListAdapter(this,  groups);
     
     listView.setGroupIndicator(null);
     listView.setAdapter(adapter);
@@ -102,7 +121,7 @@ public class MainActivity extends Activity {
 			  }
 			DialogB.show();
 		}
-	});
+	});*/
   }
 
   public void createData() {
@@ -118,6 +137,10 @@ public class MainActivity extends Activity {
     	groups.append(ct, group);
     	ct++;
     }
+  }
+  public MyExpandableListAdapter getAdapter()
+  {
+	  return this.adapter;
   }
   
 

@@ -2,7 +2,8 @@ package com.example.explistview;
 import java.util.HashMap;
 
 import android.app.Activity;
-import android.app.Dialog;
+import android.content.Intent;
+import android.sax.StartElementListener;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -14,15 +15,15 @@ import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
   private final SparseArray<Group> groups;
   public LayoutInflater inflater;
   public Activity activity;
+  String pp;
    
-  public HashMap<String, HashMap<String, Integer>> quantity_hashed= new HashMap<String, HashMap<String, Integer>>();
+   HashMap<String, HashMap<String, Integer>> quantity_hashed= new HashMap<String, HashMap<String, Integer>>();
   public MyExpandableListAdapter(Activity act, SparseArray<Group> groups) {
     activity = act;
     this.groups = groups;
@@ -46,6 +47,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
     final String children = (String) getChild(groupPosition, childPosition);
     Group group=(Group)getGroup(groupPosition);
     final String parent1=group.string;
+    pp = parent1;
     
     TextView text = null;
     
@@ -118,76 +120,15 @@ Button bt21 = (Button) convertView.findViewById(R.id.decrement2);
 	
     //convertView.setFocusableInTouchMode(true);
     convertView.setOnClickListener(new OnClickListener() {
-      @Override
-      public void onClick(View v) {
-    	final Dialog dialogA = new Dialog(activity,android.R.style.Theme_Holo_Light_Dialog_MinWidth);
-    	dialogA.setContentView(R.layout.quantity);
-    	dialogA.setTitle(children);
-    	final TextView tv1=(TextView) dialogA.findViewById(R.id.qu);
-    	if(quantity_hashed.containsKey(parent1))
-    	{
-    	if(quantity_hashed.get(parent1).containsKey(children))
-    	{
-    		tv1.setText(Integer.toString(quantity_hashed.get(parent1).get(children)));
-    	}
-    	else
-    		tv1.setText("0");
-    	}
-    	else
-    		tv1.setText("0");
-    	
-    	
-    	final TextView tv2=(TextView) dialogA.findViewById(R.id.title);
-    	tv2.setText(children);
-    	
-    	Button bt1 = (Button) dialogA.findViewById(R.id.increment);
-    	bt1.setOnClickListener(new OnClickListener() {
+
+		@Override
+		public void onClick(View arg0) {
+			Intent intent = new Intent(activity,DetailActivity.class);
+			intent.putExtra("name", children);
+			activity.startActivity(intent);
 			
-			@Override
-			public void onClick(View v) {
-				String s1=tv1.getText().toString();
-				int n=Integer.parseInt(s1);
-				n=n+1;
-				tv1.setText(Integer.toString(n));
-				
-			}
-		});
-    	Button bt2 = (Button) dialogA.findViewById(R.id.decrement);
-    	bt2.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				String s1=tv1.getText().toString();
-				int n=Integer.parseInt(s1);
-				if(n>=1)
-					n=n-1;
-				tv1.setText(Integer.toString(n));
-				
-			}
-		});
-    	Button bt3 = (Button) dialogA.findViewById(R.id.buy);
-    	bt3.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				String s1=tv1.getText().toString();
-				int n=Integer.parseInt(s1);
-				HashMap<String,Integer> h = new HashMap<String,Integer>();
-				
-				//quantity_hashed.put(parent1,h );
-				if(!quantity_hashed.containsKey(parent1))
-					quantity_hashed.put(parent1, h);
-				quantity_hashed.get(parent1).put(children,n);
-				int temp=quantity_hashed.get(parent1).get(children);
-				Toast.makeText(activity, Integer.toString(temp), Toast.LENGTH_LONG).show();
-				TextView tv= (TextView) activity.findViewById(R.id.bill);
-			    tv.setText("BILL: " + Integer.toString(generate_bill(quantity_hashed)));
-				dialogA.dismiss();
-			}
-		});
-    	
-    	dialogA.show();
-      }
+		}
+      
     });
     
     return convertView;
@@ -262,4 +203,58 @@ Button bt21 = (Button) convertView.findViewById(R.id.decrement2);
 	  
 	  return sum;
   }
+  
+  public int oof(String s1,String s2)
+  {
+  	int n2 = 0;
+  	if(quantity_hashed.containsKey(s1))
+  	{
+  	if(quantity_hashed.get(s1).containsKey(s2))
+  	{
+  		n2=quantity_hashed.get(s1).get(s2);
+  	}
+  	}
+  //	Toast.makeText(activity,Integer.toString(n2), Toast.LENGTH_LONG).show();
+  	n2=n2+1;
+  	
+  	HashMap<String,Integer> h = new HashMap<String,Integer>();
+  	if(!quantity_hashed.containsKey(s1))
+  		quantity_hashed.put(s1, h);
+  	quantity_hashed.get(s1).put(s2,n2);
+  	return n2;
+  }
+  
+  public int oof2(String s1,String s2)
+  {
+		int n2 = 0;
+		if(quantity_hashed.containsKey(s1))
+		{
+		if(quantity_hashed.get(s1).containsKey(s2))
+		{
+			n2=quantity_hashed.get(s1).get(s2);
+		}
+		}
+		if(n2>=1)
+		n2=n2-1;
+		HashMap<String,Integer> h = new HashMap<String,Integer>();
+		
+		//quantity_hashed.put(parent1,h );
+		if(!quantity_hashed.containsKey(s1))
+			quantity_hashed.put(s1, h);
+		quantity_hashed.get(s1).put(s2,n2);
+		return n2;
+		
+
+  }
+  public int billing(String s1,String s2)
+  {
+//	  return generate_bill(quantity_hashed);
+	  
+	 int n2=quantity_hashed.get(s1).get(s2);
+	  
+	  return n2*DataModel.h.get(s2);
+
+  }
+  
+
 } 

@@ -31,11 +31,11 @@ public class TabListener<T extends Fragment> implements ActionBar.TabListener {
         if (mFragment == null) {
             // If not, instantiate and add it to the activity
             mFragment = Fragment.instantiate(mActivity, mClass.getName());
-            ft.add(android.R.id.content, mFragment, mTag);
+            ft.replace(android.R.id.content, mFragment, mTag);
         } else {
             // If it exists, simply attach it in order to show it
             ft.attach(mFragment);
-        }
+        }	
     }
 
     public void onTabUnselected(Tab tab, FragmentTransaction ft) {

@@ -16,12 +16,12 @@
 	    android:layout_height="wrap_content"
 	    android:id="@+id/bill"
 	    android:text="BILL: "/>
-	<!-- <Button 
+<!-- 	<Button 
     		android:text="My Order"
     		android:id="@+id/order"
     		android:layout_width="wrap_content"
  			android:layout_height="wrap_content"
-    		/>-->
+    		/> -->
 		</LinearLayout>
     <ExpandableListView
         android:id="@+id/listView"
