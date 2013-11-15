@@ -1,0 +1,97 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical" 
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".LandingActivity" 
+    android:background="@drawable/grey_back">
+
+   
+   <RelativeLayout
+        android:id="@+id/relativeLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+<!--android:background="@drawable/try"-->
+           <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="119dp"
+        android:layout_height="119dp"
+        
+        android:src="@drawable/cod" />
+		 
+        
+            
+		<Button
+            android:id="@+id/button3"
+            android:layout_marginTop="8sp"
+        	android:layout_width="70dp"
+        	android:layout_height="40dp"            
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="24dp"
+            android:textStyle="bold"
+        	android:background="@color/brown"
+        	android:textColor="@color/darkbrown"
+            android:layout_toRightOf="@+id/imageView1"
+            android:text="Order Online" />
+      
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="119dp"
+            android:layout_height="wrap_content"
+            
+            
+            android:src="@drawable/dinein" />
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_marginTop="8sp"
+        	android:layout_width="70dp"
+        	android:layout_height="30dp"            
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="24dp"
+            android:textStyle="bold"
+        	android:background="@color/brown"
+        	android:textColor="@color/darkbrown"
+            android:layout_toRightOf="@+id/imageView2"
+            android:text="Dine In" />
+
+    </RelativeLayout>
+ 
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+    
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="119dp"
+        android:layout_height="119dp"
+        
+        android:src="@drawable/gps" />
+    <Button
+            android:id="@+id/button2"
+            android:layout_marginTop="8sp"
+        	android:layout_width="70dp"
+        	android:layout_height="40dp"            
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="24dp"
+            android:textStyle="bold"
+        	android:background="@color/brown"
+        	android:textColor="@color/darkbrown"
+            android:layout_toRightOf="@+id/imageView3"
+            android:text="Track your Order" />
+ 	</RelativeLayout>
+</LinearLayout>
