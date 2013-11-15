@@ -50,7 +50,7 @@ public final class R {
         public static final int soup=0x7f02001a;
     }
     public static final class id {
-        public static final int action_settings=0x7f080013;
+        public static final int action_settings=0x7f080014;
         public static final int buy=0x7f080008;
         public static final int cancel=0x7f080009;
         public static final int decrement=0x7f080007;
@@ -60,7 +60,8 @@ public final class R {
         public static final int increment=0x7f080005;
         public static final int increment2=0x7f08000f;
         public static final int iv2=0x7f08000b;
-        public static final int listView=0x7f080003;
+        public static final int listView=0x7f080013;
+        public static final int pager=0x7f080003;
         public static final int price=0x7f080002;
         public static final int qu=0x7f080006;
         public static final int quantity=0x7f080012;

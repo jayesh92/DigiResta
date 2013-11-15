@@ -23,12 +23,13 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 	String pp;
 	View glo;
 	ImageView iv;
+	private TabsPagerAdapter mAdapter;
 	HashMap<String, HashMap<String, Integer>> quantity_hashed= new HashMap<String, HashMap<String, Integer>>();
-	public MyExpandableListAdapter(Activity act, SparseArray<Group> groups) {
+	public MyExpandableListAdapter(Activity act, SparseArray<Group> groups,TabsPagerAdapter mAd) {
 		activity = act;
 		this.groups = groups;
 		inflater = act.getLayoutInflater();
-
+		this.mAdapter=mAd;
 	}
 
 	@Override
@@ -124,8 +125,8 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 				if(!quantity_hashed.containsKey(parent1))
 					quantity_hashed.put(parent1, h);
 				quantity_hashed.get(parent1).put(children,n2);
-
-
+				
+				//mAdapter.notifyDataSetChanged();
 			}
 		});
 
@@ -170,8 +171,8 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 				if(!quantity_hashed.containsKey(parent1))
 					quantity_hashed.put(parent1, h);
 				quantity_hashed.get(parent1).put(children,n2);
-
-
+				
+				//mAdapter.notifyDataSetChanged();
 			}
 		});
 
