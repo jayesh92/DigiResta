@@ -7,7 +7,7 @@
          
     <item android:drawable="@drawable/plus_active"
          android:state_focused="true"/>
-    <item android:drawable="@drawable/plus_active"
+    <item android:drawable="@drawable/plus_inactive"
          />
 
 </selector>

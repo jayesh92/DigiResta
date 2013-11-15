@@ -38,7 +38,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
     }
     @Override
     public int getItemPosition(Object object) {
-      //  if(object instanceof Tab2Fragment)
+        //if(object instanceof Tab2Fragment)
         	return POSITION_NONE;
         //else
         	//return POSITION_UNCHANGED;

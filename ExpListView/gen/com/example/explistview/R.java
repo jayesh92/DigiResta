@@ -47,7 +47,6 @@ public final class R {
         public static final int plus_inactive=0x7f020017;
         public static final int rihanna=0x7f020018;
         public static final int selected=0x7f020019;
-        public static final int soup=0x7f02001a;
     }
     public static final class id {
         public static final int action_settings=0x7f080014;
