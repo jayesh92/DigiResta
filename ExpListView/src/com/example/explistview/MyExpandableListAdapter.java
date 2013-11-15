@@ -23,6 +23,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 	String pp;
 	View glo;
 	ImageView iv;
+	MenuModel children;
 	private TabsPagerAdapter mAdapter;
 	HashMap<String, HashMap<String, Integer>> quantity_hashed= new HashMap<String, HashMap<String, Integer>>();
 	public MyExpandableListAdapter(Activity act, SparseArray<Group> groups,TabsPagerAdapter mAd) {
@@ -45,7 +46,9 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 	@Override
 	public View getChildView(int groupPosition, final int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
-		final String children = (String) getChild(groupPosition, childPosition);
+		//final String children = (String) getChild(groupPosition, childPosition);
+		children = (MenuModel) getChild(groupPosition,childPosition);
+		Log.d("in getchildview", ""+ children.getname());
 		Group group=(Group)getGroup(groupPosition);
 		final String parent1=group.string;
 		pp = parent1;
@@ -57,9 +60,10 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 		}
 		
 		text = (TextView) convertView.findViewById(R.id.textView1);
-		text.setText(children);
+		text.setText(children.getname());
 		TextView text2 = (TextView) convertView.findViewById(R.id.textView3);
-		int tmp = DataModel.h.get(children);
+		//int tmp = DataModel.h.get(children);
+		Integer tmp = Integer.parseInt(children.getprice());
 		String tmp2 = Integer.toString(tmp);
 		text2.setText("Price: "+tmp2);
 
@@ -68,12 +72,12 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 		TextView tv1 = (TextView)convertView.findViewById(R.id.quantity);
 		if(quantity_hashed.containsKey(parent1))
 		{
-			if(quantity_hashed.get(parent1).containsKey(children))
+			if(quantity_hashed.get(parent1).containsKey(children.getname()))
 			{
-				if(quantity_hashed.get(parent1).get(children)>0)
+				if(quantity_hashed.get(parent1).get(children.getname())>0)
 				{
 					iv.setVisibility(View.VISIBLE);
-					tv1.setText(Integer.toString(quantity_hashed.get(parent1).get(children)));
+					tv1.setText(Integer.toString(quantity_hashed.get(parent1).get(children.getname())));
 					tv1.setVisibility(View.VISIBLE);
 				}
 				else
@@ -105,9 +109,9 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 				
 				if(quantity_hashed.containsKey(parent1))
 				{
-					if(quantity_hashed.get(parent1).containsKey(children))
+					if(quantity_hashed.get(parent1).containsKey(children.getname()))
 					{
-						n2=quantity_hashed.get(parent1).get(children);
+						n2=quantity_hashed.get(parent1).get(children.getname());
 					}
 				}
 				n2=n2+1;
@@ -116,7 +120,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 				iv.setVisibility(View.VISIBLE);
 				TextView tv1=(TextView)v1.findViewById(R.id.quantity);
 				tv1.setText(Integer.toString(n2));
-				Log.d("in plus", "For " + parent1 + " " + children);
+				Log.d("in plus", "For " + parent1 + " " + children.getname());
 				tv1.setVisibility(View.VISIBLE);
 				
 				HashMap<String,Integer> h = new HashMap<String,Integer>();
@@ -124,7 +128,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 				//quantity_hashed.put(parent1,h );
 				if(!quantity_hashed.containsKey(parent1))
 					quantity_hashed.put(parent1, h);
-				quantity_hashed.get(parent1).put(children,n2);
+				quantity_hashed.get(parent1).put(children.getname(),n2);
 				
 				//mAdapter.notifyDataSetChanged();
 			}
@@ -140,9 +144,9 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 				int n2 = 0;
 				if(quantity_hashed.containsKey(parent1))
 				{
-					if(quantity_hashed.get(parent1).containsKey(children))
+					if(quantity_hashed.get(parent1).containsKey(children.getname()))
 					{
-						n2=quantity_hashed.get(parent1).get(children);
+						n2=quantity_hashed.get(parent1).get(children.getname());
 					}
 				}
 				if(n2>=1)
@@ -156,21 +160,21 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 					TextView tv1=(TextView)v1.findViewById(R.id.quantity);
 					tv1.setText(Integer.toString(n2));
 					tv1.setVisibility(View.INVISIBLE);
-					Log.d("in minus zero", "For " + parent1 + " " + children);
+					Log.d("in minus zero", "For " + parent1 + " " + children.getname());
 				}
 				else
 				{
 					TextView tv1=(TextView)v1.findViewById(R.id.quantity);
 					tv1.setText(Integer.toString(n2));
 					tv1.setVisibility(View.VISIBLE);
-					Log.d("in minus", "For " + parent1 + " " + children);
+					Log.d("in minus", "For " + parent1 + " " + children.getname());
 				}
 				HashMap<String,Integer> h = new HashMap<String,Integer>();
 
 				//quantity_hashed.put(parent1,h );
 				if(!quantity_hashed.containsKey(parent1))
 					quantity_hashed.put(parent1, h);
-				quantity_hashed.get(parent1).put(children,n2);
+				quantity_hashed.get(parent1).put(children.getname(),n2);
 				
 				//mAdapter.notifyDataSetChanged();
 			}
@@ -185,7 +189,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 			@Override
 			public void onClick(View arg0) {
 				Intent intent = new Intent(activity,DetailActivity.class);
-				intent.putExtra("name", children);
+				intent.putExtra("name", children.getname());
 				activity.startActivity(intent);
 
 			}
@@ -259,6 +263,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 			for(HashMap.Entry<String,Integer> e1: e.getValue().entrySet())
 			{
 				sum+=e1.getValue()*DataModel.h.get(e1.getKey());
+				//sum+=e1.getValue()*DataModel.h.get(e1.getKey());
 			}
 		}
 

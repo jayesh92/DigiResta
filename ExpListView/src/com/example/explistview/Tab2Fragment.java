@@ -1,10 +1,12 @@
 package com.example.explistview;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,8 @@ public class Tab2Fragment extends Fragment{
 	int bill2 =0;
 	TextView column444;
 	TableLayout ll;
+	HashMap<String,HashMap<String,Integer>> price;
+	SparseArray<Group> grps;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -47,10 +51,24 @@ public class Tab2Fragment extends Fragment{
 
 		layoutParams1.setMargins(30, 20, 30, 0);
 		ll.addView(newRow1, layoutParams1);
-
-		HashMap<String,HashMap<String,Integer>> q_h =((MainActivity)getActivity()).adapter.quantity_hashed;
+		price = new HashMap<String, HashMap<String,Integer>>();
+		HashMap<String,HashMap<String,Integer>> q_h =
+				((MainActivity)getActivity()).adapter.quantity_hashed;
+		grps = ((MainActivity)getActivity()).groups;
+		int key = 0;
+		for(int i = 0; i < grps.size(); i++) {
+		   key = grps.keyAt(i);
+		   // get the object by the key.
+		   Group g = grps.get(key);
+		   price.put(g.string, new HashMap<String,Integer>());
+		   for(MenuModel e : g.children)
+		   {
+			   price.get(g.string).put(e.getname(), Integer.parseInt(e.getprice()));
+		   }
+		}
 		int sum=0;
-
+		
+		
 		for(HashMap.Entry<String,HashMap<String,Integer>> e: (q_h.entrySet()))
 		{
 			for(HashMap.Entry<String,Integer> e1: e.getValue().entrySet())
@@ -59,7 +77,7 @@ public class Tab2Fragment extends Fragment{
 				if(e1.getValue()>0)
 				{
 					final String p2 = e1.getKey();
-					final int pr1 = DataModel.h.get(e1.getKey());
+					final int pr1 = price.get(e.getKey()).get(e1.getKey());
 					final int qu1 = e1.getValue();
 					TableRow newRow = new TableRow(ctx);
 					final TextView column1 = new TextView(ctx);
@@ -70,9 +88,9 @@ public class Tab2Fragment extends Fragment{
 					Button minus = new Button(ctx);
 					column1.setText(e1.getKey()+"    ");
 					column2.setText(Integer.toString(e1.getValue())+"    ");
-					column3.setText(Integer.toString(DataModel.h.get(e1.getKey()))+"    ");
-					column4.setText(Integer.toString(e1.getValue()*DataModel.h.get(e1.getKey()))+"    ");
-					bill2=bill2+e1.getValue()*DataModel.h.get(e1.getKey());
+					column3.setText(Integer.toString(pr1)+"    ");
+					column4.setText(Integer.toString(e1.getValue()*pr1)+"    ");
+					bill2=bill2+e1.getValue()*pr1;
 					newRow.addView(column1);
 					newRow.addView(column2);
 					newRow.addView(column3);
@@ -92,7 +110,7 @@ public class Tab2Fragment extends Fragment{
 							int amt = tt*pr1;
 							//	int tmp=bill2+DataModel.h.get(e1.getKey());
 							column4.setText(Integer.toString(amt)+"    ");
-							bill2+=DataModel.h.get(p2);
+							bill2+=pr1;
 							column444.setText(Integer.toString(bill2));
 						}
 					});
@@ -116,7 +134,7 @@ public class Tab2Fragment extends Fragment{
 							//										bill = ((MainActivity)getActivity()).adapter.billing();
 							//	  Toast.makeText(ctx,Integer.toString(bill), Toast.LENGTH_LONG).show();
 							}
-							bill2-=DataModel.h.get(p2);
+							bill2-=pr1;
 							column444.setText(Integer.toString(bill2));
 						}
 					});
@@ -130,7 +148,7 @@ public class Tab2Fragment extends Fragment{
 					String tmp22 = p2;
 					///bill2=bill2+((MainActivity)getActivity()).adapter.billing(tmp11, tmp22); 
 				}
-				sum+=e1.getValue()*DataModel.h.get(e1.getKey());
+				//sum+=e1.getValue()*pr1;
 			}
 		}
 		TableRow newRow2 = new TableRow(ctx);
