@@ -89,8 +89,8 @@
     
     <ImageView
         android:id="@+id/selected"
-        android:layout_width="25dip"
-        android:layout_height="25dip"
+        android:layout_width="30dip"
+        android:layout_height="30dip"
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/textView3"
         android:layout_toLeftOf="@+id/textView3"
@@ -109,7 +109,7 @@
         android:visibility="invisible"
         android:textColor="#FF0000"
         android:textStyle="bold"
-        android:textSize="50"
+        android:textSize="20sp"
         android:text="~" />
 
 </RelativeLayout>
