@@ -64,7 +64,7 @@ public final class R {
         public static final int selected=0x7f02001e;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a002a;
+        public static final int action_settings=0x7f0a002b;
         public static final int btnSubmit=0x7f0a000f;
         public static final int button1=0x7f0a000a;
         public static final int button2=0x7f0a0018;
@@ -88,6 +88,7 @@ public final class R {
         public static final int list_order=0x7f0a0029;
         public static final int pager=0x7f0a0010;
         public static final int price=0x7f0a000d;
+        public static final int proceed=0x7f0a002a;
         public static final int qu=0x7f0a0024;
         public static final int quantity=0x7f0a0022;
         public static final int relativeLayout1=0x7f0a0014;

@@ -18,9 +18,13 @@
 	    android:id="@+id/list_order">
 	    
 	</ListView>
-    <TextView
+
+    
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="text" />
+        android:id="@+id/proceed"
+        android:text="proceed" 
+        />
     
 </LinearLayout>
