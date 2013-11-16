@@ -24,6 +24,7 @@ public class MyNewActivity extends Activity {
 		Log.d("intent","data"+myintent.getStringExtra("street"));
 		Log.d("intent","data"+myintent.getStringExtra("flat"));
 		Log.d("intent","data"+myintent.getStringExtra("mobile"));
+		
 	}
 
 	/**

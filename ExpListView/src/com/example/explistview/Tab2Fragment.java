@@ -37,7 +37,8 @@ public class Tab2Fragment extends Fragment{
 	//@Jayesh
 
 	String jsonResult;
-	String url="http://192.168.0.104/DigiResta/submit_dineinorder.php";
+	String url="";
+	//String url="http://"+getString(R.string.ip)+"/DigiResta/submit_dineinorder.php";
 
 	String name="babaji";
 	String total_cost;
@@ -67,10 +68,20 @@ public class Tab2Fragment extends Fragment{
 			try 
 			{
 				ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-				nameValuePairs.add(new BasicNameValuePair("name", name));
-				nameValuePairs.add(new BasicNameValuePair("total_cost", total_cost));
-				nameValuePairs.add(new BasicNameValuePair("table", table));
-				nameValuePairs.add(new BasicNameValuePair("order_details", order_details));
+				if(((MainActivity)getActivity()).cod_flg==false)
+				{
+					nameValuePairs.add(new BasicNameValuePair("name", name));
+					nameValuePairs.add(new BasicNameValuePair("total_cost", total_cost));
+					nameValuePairs.add(new BasicNameValuePair("table", table));
+					nameValuePairs.add(new BasicNameValuePair("order_details", order_details));
+				}
+				else
+				{
+					nameValuePairs.add(new BasicNameValuePair("total_cost", total_cost));
+					nameValuePairs.add(new BasicNameValuePair("order_details", order_details));
+					nameValuePairs.add(new BasicNameValuePair("addr",
+							((MainActivity)getActivity()).daal_addr));
+				}
 				httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 				//Final Request
 				HttpResponse response = httpclient.execute(httppost);
@@ -135,6 +146,10 @@ public class Tab2Fragment extends Fragment{
 		Log.d("tab2","Called");
 		int cnt = 0;
 		int bill = 0;
+		if(((MainActivity)getActivity()).cod_flg)
+			url="http://"+getString(R.string.ip)+"/DigiResta/submit_codorder.php";
+		else
+			url="http://"+getString(R.string.ip)+"/DigiResta/submit_dineinorder.php";
 		bill2=0;
 		Context ctx = getActivity();
 		View v =	inflater.inflate(R.layout.tab2, container, false);

@@ -16,30 +16,40 @@ import android.widget.Spinner;
 public class Cod extends Activity {
 	public Spinner myspinner1,myspinner2;
 	public String flag1,flag2;
+	public String addr;
 	ArrayAdapter<CharSequence> adapter1,adapter2;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cod);
 		spinner();
+		addr="";
 		Button buttonOne = (Button) findViewById(R.id.button1);
 		buttonOne.setOnClickListener(new Button.OnClickListener() {
 		 // proceed dabane pe ye func call hota hain
 			public void onClick(View v) {
-		    	Intent myintent = new Intent(Cod.this, MyNewActivity.class); //Intent for new activity
+				Intent myintent = new Intent(Cod.this, MainActivity.class); //Intent for new activity
 	
-		    	myintent.putExtra("city", flag1);
-		    	myintent.putExtra("locality", flag2);
+		    	addr+=flag1+"$" +flag2+"$";
+				//myintent.putExtra("city", flag1);
+		    	//myintent.putExtra("locality", flag2);
 		    	EditText et1 = (EditText) findViewById(R.id.edittext1);
 		    	String street = et1.getText().toString();
-		    	EditText et2 = (EditText) findViewById(R.id.edittext2);
-		    	String flat = et2.getText().toString();
 		    	EditText et3 = (EditText) findViewById(R.id.edittext3);
 		    	String mobile = et3.getText().toString();
-		    	myintent.putExtra("street", street);
-		    	myintent.putExtra("flat", flat);
-		    	myintent.putExtra("mobile", mobile);   	
-		    					 startActivity(myintent); //start activity
+		    	
+		    	addr+=street+"$"+mobile;
+		    	//myintent.putExtra("street", street);
+		    	//myintent.putExtra("flat", flat);
+		    	//myintent.putExtra("mobile", mobile);   	
+		    	myintent.putExtra("address",addr);
+		    	   myintent.putExtra("name",
+                           "ed1.getText().toString()");
+                   myintent.putExtra("table",
+                           "ed2.getText().toString()");
+                   myintent.putExtra("restaurant","d39");
+                
+		    	startActivity(myintent); //start activity
 		    }
 		});
 	}

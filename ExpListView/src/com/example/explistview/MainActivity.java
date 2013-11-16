@@ -23,7 +23,9 @@ import org.json.JSONObject;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -34,35 +36,39 @@ import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener{
 	// more efficient than HashMap for mapping integers to objects
-	SparseArray<Group> groups = new SparseArray<Group>();
+	SparseArray<Group> groups = new SparseArray<Group>();	
 	Context ctx;
 	private ViewPager vp;
 	private TabsPagerAdapter mAdapter;
 	private ActionBar actionbar;
 	MyExpandableListAdapter adapter;
 	OrderAdapter odapter;
-	public String resta;
+	public String resta,daal_addr,cust_name,table;
 	HashMap<String,ArrayList<MenuModel>> menu = new HashMap<String,ArrayList<MenuModel>>();
-
+	public boolean cod_flg;
 	//@Jayesh
 	
 	String jsonResult;
-	String url="http://192.168.0.104/DigiResta/fetch_menu.php";
-	
+	String url="";
+	//String url="http://"+getString(R.string.ip)+"/DigiResta/fetch_menu.php";	
 	public ArrayList<MenuModel> mymap =new ArrayList<MenuModel>();
 	
 	public void accessWebService() {
 		JsonReadTask task = new JsonReadTask();
-		Log.d("Before","task.execute2");        
+		Log.d("Before","task.execute2");
+		Log.d("Ip",url);
 		task.execute(new String[] { url });
 		Log.d("After","task.execute2");
 	}
 
 	private class JsonReadTask extends AsyncTask<String, Void, String> {
+		private ProgressDialog progressDialog;
 		@Override
 		protected void onPreExecute()
 		{
-			//do initialization of required objects objects here                
+			//do initialization of required objects objects here    
+			progressDialog = ProgressDialog.show(MainActivity.this, "Wait", "Serving...");
+			
 		};
 
 		@Override
@@ -102,6 +108,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			Log.d("Before","PostExecute");
 			ListDrawer();
 			Log.d("after","PostExecute");
+			progressDialog.dismiss();
 			mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
 			adapter = new MyExpandableListAdapter(MainActivity.this, groups,mAdapter);
 			/*menu.put("Soups", new ArrayList<String>(){{ add("Manchow");add("Tomato");}});
@@ -214,7 +221,25 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		resta = getIntent().getStringExtra("restaurant");
+		url="http://"+getString(R.string.ip)+"/DigiResta/fetch_menu.php";
+		Log.d("asasa", url);
+		Intent receive = getIntent();
+		Log.d("Jayesh","asa " + receive.getStringExtra("address"));
+		resta = receive.getStringExtra("restaurant");
+		daal_addr=receive.getStringExtra("address");
+		cust_name=receive.getStringExtra("name");
+		table=receive.getStringExtra("table");
+		if(daal_addr.equals("$notcod$"))
+			cod_flg=false;
+		else
+		{
+			cod_flg=true;
+		}
+		Log.d("In MainActivity",resta);
+		Log.d("In MainActivity",daal_addr);
+		Log.d("In MainActivity",cust_name);
+		Log.d("In MainActivity",table);
+		
 		resta ="d39";
 		accessWebService();
 		
