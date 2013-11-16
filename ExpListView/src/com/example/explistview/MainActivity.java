@@ -40,6 +40,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	private TabsPagerAdapter mAdapter;
 	private ActionBar actionbar;
 	MyExpandableListAdapter adapter;
+	OrderAdapter odapter;
 	public String resta;
 	HashMap<String,ArrayList<MenuModel>> menu = new HashMap<String,ArrayList<MenuModel>>();
 
@@ -107,6 +108,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			menu.put("Starter", new ArrayList<String>(){{ add("Tandoori");add("Grilled");}});
 			menu.put("Curry", new ArrayList<String>(){{ add("PBM");add("BCM");}});
 			*/
+			Log.d("mymap ki size", ""+mymap.size());
+			
 			Log.d("before", "createdata");
 			createData();
 			Log.d("after", "createdata");
@@ -249,6 +252,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			ct++;
 		}
 		
+	}
+	public void update()
+	{
+		Log.d("in", "update");
 	}
 	public MyExpandableListAdapter getAdapter()
 	{

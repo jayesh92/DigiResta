@@ -64,15 +64,15 @@ public final class R {
         public static final int selected=0x7f02001e;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a0029;
+        public static final int action_settings=0x7f0a002a;
         public static final int btnSubmit=0x7f0a000f;
         public static final int button1=0x7f0a000a;
         public static final int button2=0x7f0a0018;
         public static final int button3=0x7f0a0013;
-        public static final int buy=0x7f0a001d;
-        public static final int cancel=0x7f0a001e;
-        public static final int decrement=0x7f0a001c;
-        public static final int decrement2=0x7f0a0025;
+        public static final int buy=0x7f0a0026;
+        public static final int cancel=0x7f0a0027;
+        public static final int decrement=0x7f0a0025;
+        public static final int decrement2=0x7f0a0020;
         public static final int desc=0x7f0a000c;
         public static final int displayLinear=0x7f0a0019;
         public static final int edittext1=0x7f0a0005;
@@ -81,30 +81,31 @@ public final class R {
         public static final int imageView1=0x7f0a0012;
         public static final int imageView2=0x7f0a0015;
         public static final int imageView3=0x7f0a0017;
-        public static final int increment=0x7f0a001a;
-        public static final int increment2=0x7f0a0024;
-        public static final int iv2=0x7f0a0020;
+        public static final int increment=0x7f0a0023;
+        public static final int increment2=0x7f0a001f;
+        public static final int iv2=0x7f0a001b;
         public static final int listView=0x7f0a0028;
+        public static final int list_order=0x7f0a0029;
         public static final int pager=0x7f0a0010;
         public static final int price=0x7f0a000d;
-        public static final int qu=0x7f0a001b;
-        public static final int quantity=0x7f0a0027;
+        public static final int qu=0x7f0a0024;
+        public static final int quantity=0x7f0a0022;
         public static final int relativeLayout1=0x7f0a0014;
         public static final int relativeLayout2=0x7f0a0016;
         public static final int relativeLayout3=0x7f0a0011;
         public static final int restaurant_spinner=0x7f0a000e;
-        public static final int selected=0x7f0a0026;
+        public static final int selected=0x7f0a0021;
         public static final int spinner1=0x7f0a0001;
         public static final int spinner2=0x7f0a0003;
-        public static final int textView1=0x7f0a0021;
-        public static final int textView2=0x7f0a0022;
-        public static final int textView3=0x7f0a0023;
+        public static final int textView1=0x7f0a001c;
+        public static final int textView2=0x7f0a001d;
+        public static final int textView3=0x7f0a001e;
         public static final int textview1=0x7f0a0000;
         public static final int textview2=0x7f0a0002;
         public static final int textview3=0x7f0a0004;
         public static final int textview4=0x7f0a0006;
         public static final int textview5=0x7f0a0008;
-        public static final int thumbnail=0x7f0a001f;
+        public static final int thumbnail=0x7f0a001a;
         public static final int title=0x7f0a000b;
     }
     public static final class layout {
@@ -115,11 +116,12 @@ public final class R {
         public static final int activity_my_new=0x7f030004;
         public static final int activity_option=0x7f030005;
         public static final int my_order=0x7f030006;
-        public static final int quantity=0x7f030007;
-        public static final int row_child=0x7f030008;
-        public static final int row_group=0x7f030009;
-        public static final int tab1=0x7f03000a;
-        public static final int tab2=0x7f03000b;
+        public static final int order_row=0x7f030007;
+        public static final int quantity=0x7f030008;
+        public static final int row_child=0x7f030009;
+        public static final int row_group=0x7f03000a;
+        public static final int tab1=0x7f03000b;
+        public static final int tab2=0x7f03000c;
     }
     public static final class menu {
         public static final int cod=0x7f090000;

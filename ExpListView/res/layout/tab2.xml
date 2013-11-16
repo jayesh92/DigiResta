@@ -7,15 +7,20 @@
     android:orientation="vertical"
     android:scrollbars="none" >
 
-    <TableLayout
+      <TableLayout
         android:id="@+id/displayLinear"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="wrap_content" >
     </TableLayout>
-
+	<ListView 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:id="@+id/list_order">
+	    
+	</ListView>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="text" />
-
+    
 </LinearLayout>

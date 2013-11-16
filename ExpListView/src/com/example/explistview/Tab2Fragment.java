@@ -1,27 +1,32 @@
 package com.example.explistview;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TableLayout;
-import android.widget.TableLayout.LayoutParams;
-import android.widget.TableRow;
 import android.widget.TextView;
 public class Tab2Fragment extends Fragment{
 
 	int bill2 =0;
 	TextView column444;
 	TableLayout ll;
+	ListView lv;
 	HashMap<String,HashMap<String,Integer>> price;
 	SparseArray<Group> grps;
+	HashMap<String,HashMap<String,Integer>> q_h = new HashMap<String, HashMap<String,Integer>>();
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -31,146 +36,63 @@ public class Tab2Fragment extends Fragment{
 		bill2=0;
 		Context ctx = getActivity();
 		View v =	inflater.inflate(R.layout.tab2, container, false);
-		ll = (TableLayout) v.findViewById(R.id.displayLinear);
+		lv = (ListView)v.findViewById(R.id.list_order);
+		q_h =((MainActivity)getActivity()).adapter.quantity_hashed;
+		grps = ((MainActivity)getActivity()).groups;
+		OrderAdapter odapter=new OrderAdapter(make_order(),getActivity(),q_h,getActivity());
+		
+		
+		lv.setAdapter(odapter);
+		
+		
+		/*ll = (TableLayout) v.findViewById(R.id.displayLinear);
+		LayoutInflater infla = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		for(int i=0;i<10;i++)
+		{
+		View vi = infla.inflate(R.layout.order_row, null);
 		TableRow newRow1 = new TableRow(ctx);
-		TextView column11 = new TextView(ctx);
-		TextView column22 = new TextView(ctx);
-		TextView column33 = new TextView(ctx);
-		TextView column44 = new TextView(ctx);
-
-		column11.setText("ITEM"+"    ");
-		column22.setText("QUANTITY"+"    ");
-		column33.setText("PRICE"+"    ");
-		column44.setText("AMOUNT"+"    ");
-		newRow1.addView(column11);
-		newRow1.addView(column22);
-		newRow1.addView(column33);
-		newRow1.addView(column44);
+		
 		LayoutParams layoutParams1 = new LayoutParams(
 				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
-
-		layoutParams1.setMargins(30, 20, 30, 0);
-		ll.addView(newRow1, layoutParams1);
-		price = new HashMap<String, HashMap<String,Integer>>();
-		HashMap<String,HashMap<String,Integer>> q_h =
-				((MainActivity)getActivity()).adapter.quantity_hashed;
-		grps = ((MainActivity)getActivity()).groups;
+		TextView t = new TextView(ctx);
+		t.setText("Chu Chu");
+		newRow1.addView(vi);
+		newRow1.setLayoutParams(layoutParams1);
+		//layoutParams1.setMargins(30, 20, 30, 0);
+		ll.addView(newRow1,layoutParams1);
+		Log.d("inloop",""+i);
+		}*/
+		return v;
+	}
+	private ArrayList<MenuModel> make_order() {
+		// TODO Auto-generated method stub
+		ArrayList<MenuModel> order = new ArrayList<MenuModel>();
+		for(Entry<String,HashMap<String,Integer>> e: q_h.entrySet())
+		{
+			for(Entry<String,Integer> e1: e.getValue().entrySet())
+			{
+				Log.d("q_h ", " " + e1.getKey() + " " + e1.getValue());
+			}
+		}
 		int key = 0;
 		for(int i = 0; i < grps.size(); i++) {
 		   key = grps.keyAt(i);
 		   // get the object by the key.
 		   Group g = grps.get(key);
-		   price.put(g.string, new HashMap<String,Integer>());
+		   //price.put(g.string, new HashMap<String,Integer>());
 		   for(MenuModel e : g.children)
 		   {
-			   price.get(g.string).put(e.getname(), Integer.parseInt(e.getprice()));
+			   if(q_h.containsKey(g.string) && q_h.get(g.string).containsKey(e.getname()))
+			   {
+				   int val=q_h.get(g.string).get(e.getname());
+				   if(val > 0)
+				   {
+					   order.add(e);
+					   Log.d("In Order", "Added "+e.getname());
+				   }
+			   }
 		   }
 		}
-		int sum=0;
-		
-		
-		for(HashMap.Entry<String,HashMap<String,Integer>> e: (q_h.entrySet()))
-		{
-			for(HashMap.Entry<String,Integer> e1: e.getValue().entrySet())
-			{
-				final String p = e.getKey();
-				if(e1.getValue()>0)
-				{
-					final String p2 = e1.getKey();
-					final int pr1 = price.get(e.getKey()).get(e1.getKey());
-					final int qu1 = e1.getValue();
-					TableRow newRow = new TableRow(ctx);
-					final TextView column1 = new TextView(ctx);
-					final TextView column2 = new TextView(ctx);
-					final TextView column3 = new TextView(ctx);
-					final TextView column4 = new TextView(ctx);
-					Button plus = new Button(ctx);
-					Button minus = new Button(ctx);
-					column1.setText(e1.getKey()+"    ");
-					column2.setText(Integer.toString(e1.getValue())+"    ");
-					column3.setText(Integer.toString(pr1)+"    ");
-					column4.setText(Integer.toString(e1.getValue()*pr1)+"    ");
-					bill2=bill2+e1.getValue()*pr1;
-					newRow.addView(column1);
-					newRow.addView(column2);
-					newRow.addView(column3);
-					newRow.addView(column4);
-					plus.setId(1);
-					minus.setId(2);
-					plus.setText("+");
-					minus.setText("-");
-					plus.setOnClickListener(new View.OnClickListener() {
-
-						@Override
-						public void onClick(View v) {
-							String tmp_1 = p;
-							String tmp_2 = p2;
-							int tt = ((MainActivity)getActivity()).adapter.oof(tmp_1,tmp_2);
-							column2.setText(Integer.toString(tt)+"    ");
-							int amt = tt*pr1;
-							//	int tmp=bill2+DataModel.h.get(e1.getKey());
-							column4.setText(Integer.toString(amt)+"    ");
-							bill2+=pr1;
-							column444.setText(Integer.toString(bill2));
-						}
-					});
-					newRow.addView(plus);
-					minus.setOnClickListener(new View.OnClickListener() {
-
-						@Override
-						public void onClick(View v) {
-							String tmp_1 = p;
-							String tmp_2 = p2;
-							int tt = ((MainActivity)getActivity()).adapter.oof2(tmp_1,tmp_2);
-							if(tt==0)
-							{
-								ll.removeView((View) v.getParent());
-							}
-							else
-							{
-							column2.setText(Integer.toString(tt)+"    ");
-							int amt = tt*pr1;
-							column4.setText(Integer.toString(amt)+"    ");
-							//										bill = ((MainActivity)getActivity()).adapter.billing();
-							//	  Toast.makeText(ctx,Integer.toString(bill), Toast.LENGTH_LONG).show();
-							}
-							bill2-=pr1;
-							column444.setText(Integer.toString(bill2));
-						}
-					});
-					newRow.addView(minus);
-					LayoutParams layoutParams = new LayoutParams(
-							LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
-
-					layoutParams.setMargins(30, 20, 30, 0);
-					ll.addView(newRow, layoutParams);
-					String tmp11 = p;
-					String tmp22 = p2;
-					///bill2=bill2+((MainActivity)getActivity()).adapter.billing(tmp11, tmp22); 
-				}
-				//sum+=e1.getValue()*pr1;
-			}
-		}
-		TableRow newRow2 = new TableRow(ctx);
-		final TextView column111 = new TextView(ctx);
-		final TextView column222 = new TextView(ctx);
-		final TextView column333 = new TextView(ctx);
-		column444 = new TextView(ctx);
-		column111.setText("");
-		column222.setText("");
-		column333.setText("Current Bill:");
-		//	  bill = ((MainActivity)getActivity()).adapter.billing();
-		column444.setText(Integer.toString(bill2));
-		newRow2.addView(column111);
-		newRow2.addView(column222);
-		newRow2.addView(column333);
-		newRow2.addView(column444);
-		LayoutParams layoutParams = new LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
-
-		layoutParams.setMargins(30, 20, 30, 0);
-		ll.addView(newRow2, layoutParams);
-		return v;
-	}
-
+		return order;
+	}	
 }
