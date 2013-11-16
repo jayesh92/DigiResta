@@ -175,41 +175,41 @@ public class Tab2Fragment extends Fragment{
 			tc=tc+q*Integer.parseInt(m.getprice());
 			ct=ct+1;
 		}
-		
+
 		Log.d("Bill_Order", order_details);
 		total_cost = Integer.toString(tc);
 		Log.d("Bill_Cost", total_cost);
 		return order_details;
 	}
 	private ArrayList<MenuModel> make_order() {
-			// TODO Auto-generated method stub
-			ArrayList<MenuModel> order = new ArrayList<MenuModel>();
-			for(Entry<String,HashMap<String,Integer>> e: q_h.entrySet())
+		// TODO Auto-generated method stub
+		ArrayList<MenuModel> order = new ArrayList<MenuModel>();
+		for(Entry<String,HashMap<String,Integer>> e: q_h.entrySet())
+		{
+			for(Entry<String,Integer> e1: e.getValue().entrySet())
 			{
-				for(Entry<String,Integer> e1: e.getValue().entrySet())
-				{
-					Log.d("q_h ", " " + e1.getKey() + " " + e1.getValue());
-				}
+				Log.d("q_h ", " " + e1.getKey() + " " + e1.getValue());
 			}
-			int key = 0;
-			for(int i = 0; i < grps.size(); i++) {
-				key = grps.keyAt(i);
-				// get the object by the key.
-				Group g = grps.get(key);
-				//price.put(g.string, new HashMap<String,Integer>());
-				for(MenuModel e : g.children)
+		}
+		int key = 0;
+		for(int i = 0; i < grps.size(); i++) {
+			key = grps.keyAt(i);
+			// get the object by the key.
+			Group g = grps.get(key);
+			//price.put(g.string, new HashMap<String,Integer>());
+			for(MenuModel e : g.children)
+			{
+				if(q_h.containsKey(g.string) && q_h.get(g.string).containsKey(e.getname()))
 				{
-					if(q_h.containsKey(g.string) && q_h.get(g.string).containsKey(e.getname()))
+					int val=q_h.get(g.string).get(e.getname());
+					if(val > 0)
 					{
-						int val=q_h.get(g.string).get(e.getname());
-						if(val > 0)
-						{
-							order.add(e);
-							Log.d("In Order", "Added "+e.getname());
-						}
+						order.add(e);
+						Log.d("In Order", "Added "+e.getname());
 					}
 				}
 			}
-			return order;
-		}	
-	}
+		}
+		return order;
+	}	
+}
